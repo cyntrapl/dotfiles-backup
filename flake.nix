@@ -3,7 +3,7 @@
 
   nixConfig = {
     extra-substituters = [ "https://niri.cachix.org" ];
-    extra-trusted-public-keys = [ "niri.cachix.org-1:Wv7z1GmeN3tURjeNKnC1H2N31Mma8QdMjSxey3JE5gM=" ];
+    extra-trusted-public-keys = [ "niri.cachix.org-1:Al3cqSVhWzpeAqQBH4iLvijapjKzjZ2ej2ygXGBKVq0=" ];
   };
 
   inputs = {
