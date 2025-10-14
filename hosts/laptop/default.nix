@@ -8,7 +8,7 @@
   imports =
     [ 
       ./hardware.nix
-      #../../modules/drivers/amd.nix
+      ../../modules/drivers/intel.nix
     ];
 
   services.displayManager.sessionPackages = [ pkgs.niri ]; 
