@@ -1,4 +1,4 @@
-{pkgs, inputs, ...}:
+{pkgs, inputs, config, nixgl, lib, ...}:
 {
  imports = [ 
    inputs.niri-flake.homeModules.niri
@@ -8,6 +8,7 @@
  programs.niri = {
    enable = true;  
 
+   package = (config.lib.nixGL.wrap pkgs.niri);
 
    settings.spawn-at-startup = [ 
      {argv = ["waybar"];}
@@ -21,9 +22,21 @@
     wl-clipboard
   ];
 
- home.sessionVariables = {
-   NIXOS_OZONE_WL = 1;
-   XDG_SESSION_TYPE = "wayland";
-   WLR_NO_HARDWARE_CURSORS = 1;
- }; 
+  # Set environment variables
+  home.sessionVariables = {
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CURRENT_DESKTOP = "niri";
+    XDG_SESSION_DESKTOP = "niri";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+  }; 
+
+    home.file.".local/share/wayland-sessions/niri.desktop".text = ''
+    [Desktop Entry]
+    Name=Niri
+    Comment=Scrollable-tiling Wayland compositor
+    Exec=dbus-run-session ${pkgs.niri}/bin/niri
+    Type=Application
+    DesktopNames=niri
+  '';
+
 }
