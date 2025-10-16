@@ -51,6 +51,8 @@
         set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent"
       end
     '';
+
+    interactiveShellInit = "set fish_greeting ";
   }; 
 
   # Ensure Wayland-specific environment variables
