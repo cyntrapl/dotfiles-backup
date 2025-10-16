@@ -8,5 +8,6 @@
    ./lightdm.nix
    ./xserver.nix
    ./shell.nix
+   ./networking.nix
  ];
 }

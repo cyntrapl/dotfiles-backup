@@ -1,5 +1,9 @@
 { pkgs, inputs, config,  ... }: {
  home.packages = with pkgs; [
-   brave 
+   brave
+   xfce.thunar
+   xfce.thunar-archive-plugin
+   moonlight-qt
+   gparted
  ];
 }

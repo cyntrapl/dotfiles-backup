@@ -17,6 +17,15 @@
     nvf = {
       url = "github:notashelf/nvf";
     };
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -49,6 +58,8 @@
         ./modules/home/qutebrowser
         ./modules/home/nvf
         ./modules/home/terminal
+        ./modules/home/themes
+        ./modules/home/browser
       ];
 
       waylandModules = [
@@ -75,10 +86,13 @@
           ./modules/core
           inputs.home-manager.nixosModules.default
           {
+           
+           nixpkgs.overlays = [ inputs.nur.overlays.default ];
            home-manager = {
              useUserPackages = true;
              useGlobalPkgs = true;
 	     extraSpecialArgs = { inherit inputs; };
+             backupFileExtension = "backup";
              users.${user} = {
                imports = hostAttrs.${host}.modules ++ [ ./hosts/${host}/home.nix ];
                home.stateVersion = stateVersion;

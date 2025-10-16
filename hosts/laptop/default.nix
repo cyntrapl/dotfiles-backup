@@ -11,5 +11,14 @@
       ../../modules/drivers/intel.nix
     ];
 
+  environment.systemPackages = with pkgs;[
+    brightnessctl
+  ];
+
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [ "1c33c1ced02c0e29" ];
+  };
+
   services.displayManager.sessionPackages = [ pkgs.niri ]; 
 }

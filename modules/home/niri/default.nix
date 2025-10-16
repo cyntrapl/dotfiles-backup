@@ -8,10 +8,16 @@
  programs.niri = {
    enable = true;  
 
-
+   package = pkgs.niri;
    settings.spawn-at-startup = [ 
      {argv = ["waybar"];}
+
+
    ];
+
+   settings.xwayland-satellite = {
+      enable = true;
+    };
  };
 
   home.packages = with pkgs; [
@@ -19,6 +25,9 @@
     xorg.libXcursor
     libxkbcommon
     wl-clipboard
+    xwayland
+    xwayland-satellite
+    pavucontrol
   ];
 
  home.sessionVariables = {
