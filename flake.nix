@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixgl = {
+      url = "github:guibou/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nvf = {
       url = "github:notashelf/nvf";
     };
@@ -28,12 +33,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixgl, niri-flake, ... }@inputs:
     let
       stateVersion = "25.05";
       user = "cyntrap";
       system = "x86_64-linux"; # change if needed
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ nixgl.overlays.default ];  # Apply nixGL overlay globally
+      };
       hosts = builtins.readDir ./hosts;
 
       hostAttrs = {
@@ -105,5 +113,25 @@
       }) hosts;
     in {
     nixosConfigurations = hostConfigs;
+
+    # Single Home-Manager configuration for Ubuntu
+      homeConfigurations.daniel = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs; nixgl = nixgl; };
+        modules = [
+          {
+            targets.genericLinux.enable = true;
+            home = {
+              username = "daniel";
+              homeDirectory = "/home/daniel";
+              stateVersion = stateVersion;
+            };
+          }
+          # Import all modules directly
+          {
+            imports = commonModules ++ graphicalModules ++ waylandModules;
+          }
+        ];
+      };
   };
 }

@@ -36,6 +36,4 @@
     };
 
   };
-
-  home.packages = with pkgs; [ rustdesk ];
 }
