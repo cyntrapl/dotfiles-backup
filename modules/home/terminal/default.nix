@@ -47,11 +47,10 @@
     '';
 
     interactiveShellInit = "set fish_greeting ";
-  }; 
 
-  # Ensure Wayland-specific environment variables
-  home.sessionVariables = {
-    XDG_SESSION_TYPE = "wayland";
-    LIBGL_ALWAYS_SOFTWARE = "0";  # Avoid software rendering
-  };
+    functions = {
+      # Function that works with any command
+      sw = "sudo (which $argv[1]) $argv[2..]";
+    };
+  }; 
 }

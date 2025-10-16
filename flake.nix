@@ -40,7 +40,7 @@
       system = "x86_64-linux"; # change if needed
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ nixgl.overlays.default ];  # Apply nixGL overlay globally
+        overlays = [ nixgl.overlays.default inputs.nur.overlays.default ];
       };
       hosts = builtins.readDir ./hosts;
 
@@ -119,6 +119,7 @@
         inherit pkgs;
         extraSpecialArgs = { inherit inputs; nixgl = nixgl; };
         modules = [
+          ./hosts/ubuntu/home.nix
           {
             targets.genericLinux.enable = true;
             home = {

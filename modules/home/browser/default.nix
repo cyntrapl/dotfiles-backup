@@ -1,11 +1,12 @@
-{pkgs, inputs,  ...}:
+{pkgs, inputs, ...}:
 {
- imports = [
-   inputs.zen-browser.homeModules.beta 
- ];
+  imports = [
+    inputs.zen-browser.homeModules.beta 
+  ];
 
   programs.zen-browser = {
     enable = true;
+
     policies = {
       DisableAppUpdate = true;
       DisableTelemetry = true;
@@ -25,15 +26,5 @@
         };
       }; 
     };
-
-    profiles."default" = {
-      extensions = {
-        force = true;
-        packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          bitwarden
-        ]; 
-      };
-    };
-
   };
 }
