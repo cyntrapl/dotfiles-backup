@@ -33,27 +33,46 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixgl, niri-flake, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixgl,
+      niri-flake,
+      ...
+    }@inputs:
     let
       stateVersion = "25.05";
       user = "cyntrap";
       system = "x86_64-linux"; # change if needed
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ nixgl.overlays.default inputs.nur.overlays.default ];
+        overlays = [
+          nixgl.overlays.default
+          inputs.nur.overlays.default
+        ];
       };
       hosts = builtins.readDir ./hosts;
 
       hostAttrs = {
         desktop = {
-          modules = commonModules ++ graphicalModules ++ waylandModules ++ [
-            #other modules here if needed
-          ];
+          modules =
+            commonModules
+            ++ graphicalModules
+            ++ waylandModules
+            ++ [
+              #other modules here if needed
+            ];
         };
         laptop = {
-          modules = commonModules ++ graphicalModules ++ waylandModules ++ [
-            #other modules here if needed
-          ];
+          modules =
+            commonModules
+            ++ graphicalModules
+            ++ waylandModules
+            ++ [
+              #other modules here if needed
+            ];
         };
       };
 
@@ -68,6 +87,7 @@
         ./modules/home/terminal
         ./modules/home/themes
         ./modules/home/browser
+        ./modules/home/helix
       ];
 
       waylandModules = [
@@ -84,40 +104,48 @@
 
       ];
 
-        
+      hostConfigs = nixpkgs.lib.mapAttrs (
+        host: _:
+        nixpkgs.lib.nixosSystem {
+          system = system;
+          specialArgs = {
+            inherit inputs;
+            inherit user;
+          };
+          modules = [
+            ./hosts/${host}
+            ./modules/core
+            inputs.home-manager.nixosModules.default
+            {
 
-      hostConfigs = nixpkgs.lib.mapAttrs (host: _: nixpkgs.lib.nixosSystem {
-        system = system;
-        specialArgs = { inherit inputs; inherit user;};
-        modules = [
-          ./hosts/${host}
-          ./modules/core
-          inputs.home-manager.nixosModules.default
-          {
-           
-           nixpkgs.overlays = [ inputs.nur.overlays.default ];
-           home-manager = {
-             useUserPackages = true;
-             useGlobalPkgs = true;
-	     extraSpecialArgs = { inherit inputs; };
-             backupFileExtension = "backup";
-             users.${user} = {
-               imports = hostAttrs.${host}.modules ++ [ ./hosts/${host}/home.nix ];
-               home.stateVersion = stateVersion;
-             };
-           };
+              nixpkgs.overlays = [ inputs.nur.overlays.default ];
+              home-manager = {
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                extraSpecialArgs = { inherit inputs; };
+                backupFileExtension = "backup";
+                users.${user} = {
+                  imports = hostAttrs.${host}.modules ++ [ ./hosts/${host}/home.nix ];
+                  home.stateVersion = stateVersion;
+                };
+              };
 
-           system.stateVersion = "25.05";
-          }
-        ];
-      }) hosts;
-    in {
-    nixosConfigurations = hostConfigs;
+              system.stateVersion = "25.05";
+            }
+          ];
+        }
+      ) hosts;
+    in
+    {
+      nixosConfigurations = hostConfigs;
 
-    # Single Home-Manager configuration for Ubuntu
+      # Single Home-Manager configuration for Ubuntu
       homeConfigurations.daniel = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs; nixgl = nixgl; };
+        extraSpecialArgs = {
+          inherit inputs;
+          nixgl = nixgl;
+        };
         modules = [
           ./hosts/ubuntu/home.nix
           {
@@ -134,5 +162,5 @@
           }
         ];
       };
-  };
+    };
 }
