@@ -23,8 +23,8 @@
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"
         ];
       }
-      { argv = [ "waybar" ]; }
-
+      { argv = [ "${pkgs.waybar}/bin/waybar" ]; }
+      { argv = [ "xwayland-satellite" ]; }
     ];
 
     settings.xwayland-satellite = {
@@ -37,7 +37,7 @@
     # xorg.libXcursor
     # libxkbcommon
     wl-clipboard
-    # xwayland
+    #xwayland
     # xwayland-satellite
     # pavucontrol
   ];
