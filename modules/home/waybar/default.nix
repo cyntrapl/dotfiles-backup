@@ -1,23 +1,29 @@
 {
- programs.waybar = {
-   enable = true;
+  programs.waybar = {
+    #enable = true;
 
-   settings.mainBar = {
-     layer = "top";
-     position = "top";
-     height = 30;
-     spacing = 4;
-     modules-left = [ "niri/workspaces" "niri/window"];
-     modules-center = [ "clock" ];
-     modules-right = [ "battery" "tray" ];
+    settings.mainBar = {
+      layer = "top";
+      position = "top";
+      height = 30;
+      spacing = 4;
+      modules-left = [
+        "niri/workspaces"
+        "niri/window"
+      ];
+      modules-center = [ "clock" ];
+      modules-right = [
+        "battery"
+        "tray"
+      ];
 
-     "niri/workspaces" = {
-       all-outputs = true;
-       format = "{value}";
-     };
-   };
+      "niri/workspaces" = {
+        all-outputs = true;
+        format = "{value}";
+      };
+    };
 
-   style = "
+    style = "
      * {
        border: none;
        border-radius: 0;
@@ -41,5 +47,5 @@
        background: #5e81ac;
      }
    ";
- };
+  };
 }

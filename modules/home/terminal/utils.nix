@@ -1,7 +1,7 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
- home.packages = with pkgs; [
-   dysk
-   htop
- ];
+  home.packages = with pkgs; [
+    dysk
+    btop
+  ];
 }

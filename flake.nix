@@ -31,6 +31,8 @@
     nur = {
       url = "github:nix-community/NUR";
     };
+
+    ags.url = "github:Aylur/ags";
   };
 
   outputs =
@@ -94,6 +96,7 @@
         ./modules/home/waybar
         ./modules/home/rofi
         ./modules/home/niri
+        ./modules/home/ags
       ];
 
       desktopModules = [

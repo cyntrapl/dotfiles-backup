@@ -1,0 +1,16 @@
+* {
+  all: unset;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.bar {
+  background: #ff0000; /* Bright red to be visible */
+  color: white;
+  padding: 10px;
+}
+
+.test-label {
+  color: white;
+  font-weight: bold;
+}
