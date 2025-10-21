@@ -34,12 +34,12 @@
 
   home.packages = with pkgs; [
     #niri deps
-    # xorg.libXcursor
-    # libxkbcommon
+    xorg.libXcursor
+    libxkbcommon
     wl-clipboard
     #xwayland
-    # xwayland-satellite
-    # pavucontrol
+    xwayland-satellite
+    pavucontrol
   ];
 
   # Set environment variables

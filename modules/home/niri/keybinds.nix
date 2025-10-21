@@ -14,10 +14,10 @@
     "Alt+0".action = focus-workspace 10;
 
     #Focus
-    "Alt+Left".action = focus-column-left;
-    "Alt+Right".action = focus-column-right;
-    "Alt+Up".action = focus-window-up;
-    "Alt+Down".action = focus-window-down;
+    "Super+Left".action = focus-column-left;
+    "Super+Right".action = focus-column-right;
+    "Super+Up".action = focus-window-up;
+    "Super+Down".action = focus-window-down;
     "Alt+H".action = focus-column-left;
     "Alt+L".action = focus-column-right;
     "Alt+K".action = focus-window-up;
@@ -77,8 +77,8 @@
     };
     "Alt+Q".action = close-window;
     "Alt+F".action = maximize-column;
-    "Alt+Shift+F".action = fullscreen-window;
-    "Alt+Ctrl+F".action = expand-column-to-available-width;
+    "Super+Ctrl+F".action = fullscreen-window;
+    "Alt+Shift+F".action = expand-column-to-available-width;
     "Alt+C".action = center-column;
 
     #Spawns
